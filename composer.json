@@ -2,7 +2,7 @@
     "name": "bhcosta90-codepix/package-system",
     "autoload": {
         "psr-4": {
-            "Bhcosta90Codepix\\PackageSystem\\": "src/"
+            "CodePix\\System\\": "src/"
         }
     },
     "authors": [
