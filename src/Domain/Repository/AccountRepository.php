@@ -11,8 +11,6 @@ use CodePix\System\Domain\Entities\AccountPix;
 
 interface AccountRepository extends RepositoryInterface
 {
-    public function generateAccountByAgency(string $agency): string;
-
     public function verifyAccountWithAgency(string $agency, string $account): bool;
 
     public function itemsPix(Account $account): ItemInterface;

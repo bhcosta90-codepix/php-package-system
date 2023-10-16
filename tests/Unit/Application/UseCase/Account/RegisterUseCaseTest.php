@@ -24,10 +24,6 @@ describe("RegisterUseCase Unit Test", function () {
                 ],
             ]),
             accountRepository: mockAccountRepository([
-                'generateAccountByAgency' => [
-                    'action' => fn() => '1',
-                    'with' => '1',
-                ],
                 'verifyAccountWithAgency' => fn() => false,
                 'create' => fn() => true,
             ]),

@@ -27,7 +27,7 @@ class RegisterUseCase
         $agency = $this->userRepository->getAgencyByUser($input->user);
 
         do {
-            $account = $this->accountRepository->generateAccountByAgency($agency);
+            $account = (string)rand(0000000, 9999999);
         } while ($this->accountRepository->verifyAccountWithAgency($agency, $account));
 
         $account = Account::from(
