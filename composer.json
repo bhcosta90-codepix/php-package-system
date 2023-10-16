@@ -11,6 +11,20 @@
             "email": "bruno.costa@dafiti.com.br"
         }
     ],
+    "require": {
+        "php": "^8.2",
+        "bhcosta90/clean-architecture": "^1.0"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bhcosta90/php-domain-package"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/bhcosta90/php-entity-package"
+        }
+    ],
     "require-dev": {
         "pestphp/pest": "^2.23"
     },
@@ -18,5 +32,6 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
-    }
+    },
+    "minimum-stability": "stable"
 }
