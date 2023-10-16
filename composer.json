@@ -1,0 +1,22 @@
+{
+    "name": "bhcosta90-codepix/package-system",
+    "autoload": {
+        "psr-4": {
+            "Bhcosta90Codepix\\PackageSystem\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bruno Costa",
+            "email": "bruno.costa@dafiti.com.br"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^2.23"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
