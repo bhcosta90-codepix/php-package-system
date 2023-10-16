@@ -24,6 +24,10 @@
 |
 */
 
+use CodePix\System\Domain\Repository\AccountRepository;
+use CodePix\System\Domain\Repository\UserRepository;
+use Mockery\MockInterface;
+
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
@@ -39,7 +43,37 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function mockUserRepository(array $actions = []): UserRepository|MockInterface
 {
-    // ..
+    $response = Mockery::mock(UserRepository::class);
+    mockAction($actions, $response);
+    return $response;
+}
+
+function mockAccountRepository(array $actions = []): AccountRepository|MockInterface
+{
+    $response = Mockery::mock(AccountRepository::class);
+    mockAction($actions, $response);
+    return $response;
+}
+
+function mockAction(
+    array $actions,
+    MockInterface $response
+): void {
+    foreach ($actions as $key => $action) {
+        $response = $response->shouldReceive($key);
+
+        if (!is_array($action)) {
+            $action = [
+                'action' => $action,
+            ];
+        }
+        if (!empty($action['with'])) {
+            $response->with($action['with']);
+        }
+
+        $response->andReturn($action['action']())
+            ->times($action['times'] ?? 1);
+    }
 }
