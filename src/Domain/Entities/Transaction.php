@@ -13,9 +13,27 @@ class Transaction extends Data
         protected Account $accountFrom,
         protected float $value,
         protected PixKey $pixKeyTo,
+        protected string $description,
         protected StatusTransaction $status = StatusTransaction::PENDING,
+        protected ?string $cancelDescription = null,
     ) {
         parent::__construct();
+    }
+
+    public function confirmed(): void
+    {
+        $this->status = StatusTransaction::CONFIRMED;
+    }
+
+    public function complete(): void
+    {
+        $this->status = StatusTransaction::COMPLETED;
+    }
+
+    public function error($description): void
+    {
+        $this->status = StatusTransaction::ERROR;
+        $this->cancelDescription = $description;
     }
 
     protected function validated(): void

@@ -6,7 +6,7 @@ namespace CodePix\System\Domain\Repository;
 
 use CodePix\System\Domain\Entities\Transaction;
 
-interface TransactionInterface
+interface TransactionRepositoryInterface
 {
     public function register(Transaction $transaction): bool;
 

@@ -11,7 +11,7 @@ use Costa\Entity\ValueObject\Uuid;
 class PixKey extends Data
 {
     public function __construct(
-        protected Bank $bank,
+        protected Uuid $bank,
         protected KindPixKey $kind,
         protected Account $account,
         protected string $key,

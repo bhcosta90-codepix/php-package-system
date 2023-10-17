@@ -8,7 +8,7 @@ use CodePix\System\Domain\Entities\Account;
 use CodePix\System\Domain\Entities\Bank;
 use CodePix\System\Domain\Entities\PixKey;
 
-interface PixKeyRepository
+interface PixKeyRepositoryInterface
 {
     public function register(PixKey $pixKey): bool;
 
@@ -16,7 +16,9 @@ interface PixKeyRepository
 
     public function addBank(Bank $bank);
 
+    public function findBank(string $id): Bank;
+
     public function addAccount(Account $account);
 
-    public function findAccount(string $id);
+    public function findAccount(string $id): Account;
 }
