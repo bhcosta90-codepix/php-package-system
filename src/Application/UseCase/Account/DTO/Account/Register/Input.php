@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodePix\System\Application\DTO\Account\Register;
+namespace CodePix\System\Application\UseCase\Account\DTO\Account\Register;
 
 class Input
 {

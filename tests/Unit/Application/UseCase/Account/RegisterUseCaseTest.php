@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use CodePix\System\Application\DTO\Account\Register\Input;
+use CodePix\System\Application\UseCase\Account\DTO\Account\Register\Input;
 use CodePix\System\Application\UseCase\Account\RegisterUseCase;
 use CodePix\System\Domain\Entities\AccountPix;
 use CodePix\System\Domain\Entities\Enum\AccountPix\TypeAccountPix;
