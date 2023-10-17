@@ -2,7 +2,14 @@
     "name": "bhcosta90-codepix/package-system",
     "autoload": {
         "psr-4": {
-            "CodePix\\System\\": "src/"
+            "CodePix\\System\\": "src/",
+            "Costa\\Entity\\": "Costa/Entity",
+            "Costa\\CA\\": "Costa/CA"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     },
     "authors": [
@@ -13,7 +20,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "bhcosta90/clean-architecture": "^1.0"
+        "ramsey/uuid": "^4.7",
+        "rakit/validation": "^1.4"
     },
     "repositories": [
         {

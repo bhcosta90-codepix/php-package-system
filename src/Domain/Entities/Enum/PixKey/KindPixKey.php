@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CodePix\System\Domain\Entities\Enum\AccountPix;
+namespace CodePix\System\Domain\Entities\Enum\PixKey;
 
-enum TypeAccountPix: string
+enum KindPixKey: string
 {
     case EMAIL = 'email';
     case PHONE = 'phone';
