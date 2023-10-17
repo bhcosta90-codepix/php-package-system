@@ -9,7 +9,7 @@ use Costa\Entity\Data;
 
 class AccountPix extends Data
 {
-    protected Account $account;
+    protected TypeAccountPix $key;
 
-    protected TypeAccountPix $type;
+    protected string $value;
 }

@@ -24,7 +24,7 @@
 |
 */
 
-use CodePix\System\Domain\Repository\AccountRepository;
+use CodePix\System\Domain\Repository\AccountPixRepository;
 use CodePix\System\Domain\Repository\UserRepository;
 use Mockery\MockInterface;
 
@@ -43,16 +43,9 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function mockUserRepository(array $actions = []): UserRepository|MockInterface
+function mockAccountPixRepository(array $actions = []): AccountPixRepository|MockInterface
 {
-    $response = Mockery::mock(UserRepository::class);
-    mockAction($actions, $response);
-    return $response;
-}
-
-function mockAccountRepository(array $actions = []): AccountRepository|MockInterface
-{
-    $response = Mockery::mock(AccountRepository::class);
+    $response = Mockery::mock(AccountPixRepository::class);
     mockAction($actions, $response);
     return $response;
 }

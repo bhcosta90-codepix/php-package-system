@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
 use CodePix\System\Application\UseCase\Account\RegisterUseCase;
-use CodePix\System\Domain\Entities\Account;
+use CodePix\System\Domain\Entities\AccountPix;
+use CodePix\System\Domain\Entities\Enum\AccountPix\TypeAccountPix;
 use Costa\Entity\ValueObject\Uuid;
 
 use function PHPUnit\Framework\assertEquals;
@@ -13,15 +14,13 @@ use function PHPUnit\Framework\assertNotNull;
 describe("RegisterUseCase Unit Test", function () {
     test("create a new account", function () {
         $input = new Input(
-            bank: '1',
-            agency: '1',
-            number: '1',
-            account: 'testing'
+            key: 'email',
+            value: 'test@test.com.br'
         );
 
         $useCase = new RegisterUseCase(
-            accountRepository: mockAccountRepository([
-                'findAccount' => fn() => null,
+            accountRepository: mockAccountPixRepository([
+                'find' => fn() => null,
                 'create' => fn() => true,
             ]),
         );
@@ -34,21 +33,18 @@ describe("RegisterUseCase Unit Test", function () {
 
     test("exception -> create a new account", function () {
         $input = new Input(
-            bank: '1',
-            agency: '1',
-            number: '1',
-            account: 'testing'
+            key: 'email',
+            value: 'test@test.com.br'
         );
 
         $id = Uuid::make();
 
         $useCase = new RegisterUseCase(
-            accountRepository: mockAccountRepository([
-                'findAccount' => fn() => Account::from(
+            accountRepository: mockAccountPixRepository([
+                'find' => fn() => AccountPix::from(
+                    key: TypeAccountPix::EMAIL,
+                    value: 'test@test.com.br',
                     id: $id,
-                    bank: '1',
-                    agency: '1',
-                    account: 'testing'
                 ),
                 'create' => [
                     'action' => fn() => true,

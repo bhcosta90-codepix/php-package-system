@@ -7,15 +7,17 @@ namespace CodePix\System\Application\UseCase\Account;
 use CodePix\System\Application\Responses\ResponseEnum;
 use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
 use CodePix\System\Application\UseCase\Account\DTO\Register\Output;
-use CodePix\System\Domain\Entities\Account;
-use CodePix\System\Domain\Repository\AccountRepository;
+use CodePix\System\Domain\Entities\AccountPix;
+use CodePix\System\Domain\Entities\Enum\AccountPix\TypeAccountPix;
+use CodePix\System\Domain\Repository\AccountPixRepository;
 use Throwable;
 
 class RegisterUseCase
 {
     public function __construct(
-        protected AccountRepository $accountRepository,
+        protected AccountPixRepository $accountRepository,
     ) {
+        //
     }
 
     /**
@@ -23,28 +25,23 @@ class RegisterUseCase
      */
     public function handle(Input $input): Output
     {
-        if ($account = $this->accountRepository->findAccount(
-            bank: $input->bank,
-            agency: $input->agency,
-            account: $input->account
-        )) {
+        if ($account = $this->accountRepository->find(TypeAccountPix::from($input->key), $input->value)) {
             return new Output(
                 id: (string)$account->id,
-                status: ResponseEnum::OK,
+                status: ResponseEnum::OK
             );
         }
 
-        $account = Account::from(
-            bank: $input->bank,
-            agency: $input->agency,
-            account: $input->number,
+        $account = AccountPix::from(
+            key: TypeAccountPix::from($input->key),
+            value: $input->value,
         );
 
         $this->accountRepository->create($account);
 
         return new Output(
             id: (string)$account->id,
-            status: ResponseEnum::CREATE,
+            status: ResponseEnum::CREATE
         );
     }
 }
