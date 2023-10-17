@@ -17,4 +17,23 @@ class Transaction extends Data
     ) {
         parent::__construct();
     }
+
+    protected function validated(): void
+    {
+        if ($this->accountFrom->id() == $this->pixKeyTo->account->id()) {
+            $this->notification()->push(
+                'account',
+                'the source and destination account cannot be the same'
+            );
+        }
+
+        parent::validated();
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'value' => 'numeric|min:0.01',
+        ];
+    }
 }

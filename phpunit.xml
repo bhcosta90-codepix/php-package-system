@@ -11,9 +11,7 @@
     </testsuites>
     <source>
         <include>
-            <directory suffix=".php">./app</directory>
-            <directory suffix=".php">./src</directory>
-            <directory suffix=".php">./Costa</directory>
+            <directory suffix=".php">./src/</directory>
         </include>
     </source>
 </phpunit>
