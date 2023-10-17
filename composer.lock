@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "142c980a40cbdc8e52f58f04e483a85e",
+    "content-hash": "c5de69c45641834b2930706f887da7ab",
     "packages": [
         {
             "name": "bhcosta90/clean-architecture",
@@ -65,16 +65,16 @@
         },
         {
             "name": "bhcosta90/entity",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bhcosta90/php-entity-package.git",
-                "reference": "3ca651a1ae0eb63687f0b82186bcfcafa398bcd4"
+                "reference": "3f6412847be03040f2d9739bfb94d4f901ad14dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bhcosta90/php-entity-package/zipball/3ca651a1ae0eb63687f0b82186bcfcafa398bcd4",
-                "reference": "3ca651a1ae0eb63687f0b82186bcfcafa398bcd4",
+                "url": "https://api.github.com/repos/bhcosta90/php-entity-package/zipball/3f6412847be03040f2d9739bfb94d4f901ad14dc",
+                "reference": "3f6412847be03040f2d9739bfb94d4f901ad14dc",
                 "shasum": ""
             },
             "require": {
@@ -84,6 +84,7 @@
                 "ramsey/uuid": "^4.7"
             },
             "require-dev": {
+                "captainhook/captainhook": "^5.18",
                 "pestphp/pest": "^2.19",
                 "symfony/var-dumper": "^6.3"
             },
@@ -98,6 +99,11 @@
                     "Tests\\": "tests"
                 }
             },
+            "scripts": {
+                "post-autoload-dump": [
+                    "vendor/bin/captainhook install -f -s"
+                ]
+            },
             "authors": [
                 {
                     "name": "Bruno Costa",
@@ -105,10 +111,10 @@
                 }
             ],
             "support": {
-                "source": "https://github.com/bhcosta90/php-entity-package/tree/1.0.7",
+                "source": "https://github.com/bhcosta90/php-entity-package/tree/1.0.8",
                 "issues": "https://github.com/bhcosta90/php-entity-package/issues"
             },
-            "time": "2023-10-17T14:28:20+00:00"
+            "time": "2023-10-17T14:58:37+00:00"
         },
         {
             "name": "brick/math",

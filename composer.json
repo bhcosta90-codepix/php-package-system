@@ -21,8 +21,6 @@
     ],
     "require": {
         "php": "^8.2",
-        "ramsey/uuid": "^4.7",
-        "rakit/validation": "^1.4",
         "bhcosta90/clean-architecture": "^1.0"
     },
     "repositories": [
