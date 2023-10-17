@@ -3,28 +3,23 @@
 declare(strict_types=1);
 
 use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
+use CodePix\System\Application\UseCase\Account\Exception\AccountException;
 use CodePix\System\Application\UseCase\Account\RegisterUseCase;
 
-use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotNull;
 
 describe("RegisterUseCase Unit Test", function () {
-    test("handle", function () {
+    test("create a new account", function () {
         $input = new Input(
-            user: '1',
-            name: 'testing',
-            bank: '1'
+            bank: '1',
+            agency: '1',
+            number: '1',
+            account: 'testing'
         );
 
         $useCase = new RegisterUseCase(
-            userRepository: mockUserRepository([
-                'getAgencyByUser' => [
-                    'action' => fn() => '1',
-                    'with' => '1',
-                ],
-            ]),
             accountRepository: mockAccountRepository([
-                'verifyAccountWithAgency' => fn() => false,
+                'existThisCount' => fn() => false,
                 'create' => fn() => true,
             ]),
         );
@@ -32,7 +27,27 @@ describe("RegisterUseCase Unit Test", function () {
         $response = $useCase->handle($input);
 
         assertNotNull($response->id);
-        assertEquals($response->name, 'testing');
-        assertNotNull($response->bank, '1');
+    });
+
+    test("exception -> create a new account", function () {
+        $input = new Input(
+            bank: '1',
+            agency: '1',
+            number: '1',
+            account: 'testing'
+        );
+
+        $useCase = new RegisterUseCase(
+            accountRepository: mockAccountRepository([
+                'existThisCount' => fn() => true,
+                'create' => [
+                    'action' => fn() => true,
+                    'times' => 0,
+                ],
+            ]),
+        );
+
+        expect(fn() => $useCase->handle($input))
+            ->toThrow(new AccountException(message: 'This account already exists', code: 400));
     });
 });

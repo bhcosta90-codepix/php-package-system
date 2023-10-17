@@ -8,8 +8,6 @@ use Costa\Entity\Data;
 
 class Account extends Data
 {
-    protected string $name;
-
     protected string $bank;
 
 

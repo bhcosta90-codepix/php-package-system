@@ -6,7 +6,7 @@ namespace CodePix\System\Application\UseCase\Account\DTO\Register;
 
 class Output
 {
-    public function __construct(public string $id, public string $name, public string $bank)
+    public function __construct(public string $id)
     {
     }
 }
