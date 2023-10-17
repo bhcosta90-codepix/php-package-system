@@ -2,10 +2,11 @@
     "name": "bhcosta90-codepix/package-system",
     "autoload": {
         "psr-4": {
-            "CodePix\\System\\": "src/",
-            "Costa\\Entity\\": "Costa/Entity",
-            "Costa\\CA\\": "Costa/CA"
+            "CodePix\\System\\": "src/"
         }
+    },
+    "scripts": {
+        "post-autoload-dump": "vendor/bin/captainhook install -f -s"
     },
     "autoload-dev": {
         "psr-4": {
@@ -21,7 +22,8 @@
     "require": {
         "php": "^8.2",
         "ramsey/uuid": "^4.7",
-        "rakit/validation": "^1.4"
+        "rakit/validation": "^1.4",
+        "bhcosta90/clean-architecture": "^1.0"
     },
     "repositories": [
         {
@@ -36,7 +38,8 @@
     "require-dev": {
         "pestphp/pest": "^2.23",
         "mockery/mockery": "^1.6",
-        "symfony/var-dumper": "^6.3"
+        "symfony/var-dumper": "^6.3",
+        "captainhook/captainhook": "^5.18"
     },
     "config": {
         "allow-plugins": {
