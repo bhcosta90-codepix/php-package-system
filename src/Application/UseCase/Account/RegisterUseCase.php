@@ -25,7 +25,10 @@ class RegisterUseCase
      */
     public function handle(Input $input): Output
     {
-        if ($account = $this->accountRepository->find(TypeAccountPix::from($input->key), $input->value)) {
+        if ($account = $this->accountRepository->find(
+            type: TypeAccountPix::from($input->key),
+            value: $input->value
+        )) {
             return new Output(
                 id: (string)$account->id,
                 status: ResponseEnum::OK
