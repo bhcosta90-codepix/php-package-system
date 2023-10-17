@@ -62,4 +62,16 @@ describe("Transaction Unit Test", function () {
             pixKeyTo: $pix,
         ))->toThrow(new NotificationException('account: the source and destination account cannot be the same'));
     });
+
+    it("Creating a new transaction with the value is zero", fn() => expect(fn() => new Transaction(
+        accountFrom: $this->account,
+        value: 0.00,
+        pixKeyTo: $this->pixKeyTo,
+    ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
+
+    it("Creating a new transaction with the value is negative", fn() => expect(fn() => new Transaction(
+        accountFrom: $this->account,
+        value: -1,
+        pixKeyTo: $this->pixKeyTo,
+    ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
 });
