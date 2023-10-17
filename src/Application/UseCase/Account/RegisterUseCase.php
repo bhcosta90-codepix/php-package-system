@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodePix\System\Application\UseCase\Account;
 
+use CodePix\System\Application\Responses\ResponseEnum;
 use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
 use CodePix\System\Application\UseCase\Account\DTO\Register\Output;
 use CodePix\System\Domain\Entities\Account;
@@ -29,6 +30,7 @@ class RegisterUseCase
         )) {
             return new Output(
                 id: (string)$account->id,
+                status: ResponseEnum::OK,
             );
         }
 
@@ -42,6 +44,7 @@ class RegisterUseCase
 
         return new Output(
             id: (string)$account->id,
+            status: ResponseEnum::CREATE,
         );
     }
 }

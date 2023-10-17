@@ -7,6 +7,7 @@ use CodePix\System\Application\UseCase\Account\RegisterUseCase;
 use CodePix\System\Domain\Entities\Account;
 use Costa\Entity\ValueObject\Uuid;
 
+use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertNotNull;
 
 describe("RegisterUseCase Unit Test", function () {
@@ -28,6 +29,7 @@ describe("RegisterUseCase Unit Test", function () {
         $response = $useCase->handle($input);
 
         assertNotNull($response->id);
+        assertEquals($response->status->value, 201);
     });
 
     test("exception -> create a new account", function () {
@@ -56,6 +58,8 @@ describe("RegisterUseCase Unit Test", function () {
         );
 
         $response = $useCase->handle($input);
-        expect($response->id)->toBe((string)$id);
+
+        assertEquals($response->id, (string)$id);
+        assertEquals($response->status->value, 200);
     });
 });
