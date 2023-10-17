@@ -23,12 +23,14 @@ class RegisterUseCase
      */
     public function handle(Input $input): Output
     {
-        if ($this->accountRepository->existThisCount(
+        if ($account = $this->accountRepository->existThisCount(
             bank: $input->bank,
             agency: $input->agency,
             account: $input->account
         )) {
-            throw new AccountException(message: 'This account already exists', code: 400);
+            return new Output(
+                id: (string)$account->id,
+            );
         }
 
         $account = Account::from(

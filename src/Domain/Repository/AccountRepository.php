@@ -11,7 +11,7 @@ use CodePix\System\Domain\Entities\AccountPix;
 
 interface AccountRepository extends RepositoryInterface
 {
-    public function existThisCount(string $bank, string $agency, string $account): bool;
+    public function existThisCount(string $bank, string $agency, string $account): Account;
 
     public function itemsPix(Account $account): ItemInterface;
 
