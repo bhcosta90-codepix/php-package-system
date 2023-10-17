@@ -5,6 +5,14 @@
             "CodePix\\System\\": "src/"
         }
     },
+    "scripts": {
+        "post-autoload-dump": "vendor/bin/captainhook install -f -s"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Bruno Costa",
@@ -26,7 +34,10 @@
         }
     ],
     "require-dev": {
-        "pestphp/pest": "^2.23"
+        "pestphp/pest": "^2.23",
+        "mockery/mockery": "^1.6",
+        "symfony/var-dumper": "^6.3",
+        "captainhook/captainhook": "^5.18"
     },
     "config": {
         "allow-plugins": {

@@ -24,6 +24,11 @@
 |
 */
 
+use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
+use CodePix\System\Domain\Repository\TransactionRepositoryInterface;
+use CodePix\System\Domain\Repository\UserRepository;
+use Mockery\MockInterface;
+
 expect()->extend('toBeOne', function () {
     return $this->toBe(1);
 });
@@ -39,7 +44,37 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function mockPixKeyRepositoryInterface(array $actions = []): PixKeyRepositoryInterface|MockInterface
 {
-    // ..
+    $response = Mockery::mock(PixKeyRepositoryInterface::class);
+    mockAction($actions, $response);
+    return $response;
+}
+
+function mockTransactionRepositoryInterface(array $actions = []): TransactionRepositoryInterface|MockInterface
+{
+    $response = Mockery::mock(TransactionRepositoryInterface::class);
+    mockAction($actions, $response);
+    return $response;
+}
+
+function mockAction(
+    array $actions,
+    MockInterface $response
+): void {
+    foreach ($actions as $key => $action) {
+        $response = $response->shouldReceive($key);
+
+        if (!is_array($action)) {
+            $action = [
+                'action' => $action,
+            ];
+        }
+        if (!empty($action['with'])) {
+            $response->with($action['with']);
+        }
+
+        $response->andReturn($action['action']())
+            ->times($action['times'] ?? 1);
+    }
 }

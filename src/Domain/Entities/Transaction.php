@@ -1,0 +1,57 @@
+<?php
+
+declare(strict_types=1);
+
+namespace CodePix\System\Domain\Entities;
+
+use CodePix\System\Domain\Entities\Enum\Transaction\StatusTransaction;
+use Costa\Entity\Data;
+
+class Transaction extends Data
+{
+    public function __construct(
+        protected Account $accountFrom,
+        protected float $value,
+        protected PixKey $pixKeyTo,
+        protected string $description,
+        protected StatusTransaction $status = StatusTransaction::PENDING,
+        protected ?string $cancelDescription = null,
+    ) {
+        parent::__construct();
+    }
+
+    public function confirmed(): void
+    {
+        $this->status = StatusTransaction::CONFIRMED;
+    }
+
+    public function complete(): void
+    {
+        $this->status = StatusTransaction::COMPLETED;
+    }
+
+    public function error($description): void
+    {
+        $this->status = StatusTransaction::ERROR;
+        $this->cancelDescription = $description;
+    }
+
+    protected function validated(): void
+    {
+        if ($this->accountFrom->id() == $this->pixKeyTo->account->id()) {
+            $this->notification()->push(
+                'account',
+                'the source and destination account cannot be the same'
+            );
+        }
+
+        parent::validated();
+    }
+
+    protected function rules(): array
+    {
+        return [
+            'value' => 'numeric|min:0.01',
+        ];
+    }
+}
