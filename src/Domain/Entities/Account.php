@@ -10,13 +10,9 @@ class Account extends Data
 {
     public function __construct(
         protected string $name,
-
         protected Bank $bank,
-
         protected string $agency,
-
         protected string $number,
-
         /**
          * @var PixKey[]
          */
