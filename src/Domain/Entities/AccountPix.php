@@ -15,4 +15,9 @@ class AccountPix extends Data
     protected TypeAccountPix $key;
 
     protected string $value;
+
+    public function changeBank(string $bank): void
+    {
+        $this->bank = new Uuid($bank);
+    }
 }

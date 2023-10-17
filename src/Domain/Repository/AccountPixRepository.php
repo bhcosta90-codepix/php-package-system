@@ -11,5 +11,8 @@ interface AccountPixRepository
 {
     public function create(AccountPix $account): bool;
 
+    public function update(AccountPix $account): bool;
+
     public function find(TypeAccountPix $type, string $value): ?AccountPix;
+    public function findById(string $id): ?AccountPix;
 }
