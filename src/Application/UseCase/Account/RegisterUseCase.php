@@ -10,6 +10,7 @@ use CodePix\System\Application\UseCase\Account\DTO\Register\Output;
 use CodePix\System\Domain\Entities\AccountPix;
 use CodePix\System\Domain\Entities\Enum\AccountPix\TypeAccountPix;
 use CodePix\System\Domain\Repository\AccountPixRepository;
+use Costa\Entity\ValueObject\Uuid;
 use Throwable;
 
 class RegisterUseCase
@@ -31,19 +32,22 @@ class RegisterUseCase
         )) {
             return new Output(
                 id: (string)$account->id,
-                status: ResponseEnum::OK
+                bank: (string)$account->bank,
+                status: ResponseEnum::OK,
             );
         }
 
         $account = AccountPix::from(
             key: TypeAccountPix::from($input->key),
             value: $input->value,
+            bank: new Uuid($input->bank)
         );
 
         $this->accountRepository->create($account);
 
         return new Output(
             id: (string)$account->id,
+            bank: (string)$account->bank,
             status: ResponseEnum::CREATE
         );
     }

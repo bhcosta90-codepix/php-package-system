@@ -7,6 +7,7 @@ namespace CodePix\System\Application\UseCase\Account\DTO\Register;
 class Input
 {
     public function __construct(
+        public string $bank,
         public string $key,
         public string $value,
     ) {

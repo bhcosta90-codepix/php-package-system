@@ -8,7 +8,7 @@ use CodePix\System\Application\Responses\ResponseEnum;
 
 class Output
 {
-    public function __construct(public string $id, public ResponseEnum $status)
+    public function __construct(public string $id, public string $bank, public ResponseEnum $status)
     {
     }
 }

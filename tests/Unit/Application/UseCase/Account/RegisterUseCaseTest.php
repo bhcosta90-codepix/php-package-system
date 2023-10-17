@@ -14,6 +14,7 @@ use function PHPUnit\Framework\assertNotNull;
 describe("RegisterUseCase Unit Test", function () {
     test("create a new account", function () {
         $input = new Input(
+            bank: '0ab4b766-6c8a-11ee-b962-0242ac120002',
             key: 'email',
             value: 'test@test.com.br'
         );
@@ -33,6 +34,7 @@ describe("RegisterUseCase Unit Test", function () {
 
     test("exception -> create a new account", function () {
         $input = new Input(
+            bank: '0ab4b766-6c8a-11ee-b962-0242ac120002',
             key: 'email',
             value: 'test@test.com.br'
         );
@@ -45,6 +47,7 @@ describe("RegisterUseCase Unit Test", function () {
                     key: TypeAccountPix::EMAIL,
                     value: 'test@test.com.br',
                     id: $id,
+                    bank: new Uuid('0ab4b766-6c8a-11ee-b962-0242ac120002')
                 ),
                 'create' => [
                     'action' => fn() => true,
