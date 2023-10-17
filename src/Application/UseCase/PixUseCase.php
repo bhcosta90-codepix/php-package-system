@@ -31,7 +31,7 @@ class PixUseCase
 
 
         $pix = new PixKey(
-            bank: new Uuid($account),
+            bank: $account->bank,
             kind: KindPixKey::from($kind),
             account: $account,
             key: $key,

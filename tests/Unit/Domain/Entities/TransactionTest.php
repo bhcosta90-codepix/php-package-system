@@ -44,7 +44,7 @@ describe("Transaction Unit Test", function () {
         );
     });
 
-    it("Creating a new transaction", function () {
+    test("Creating a new transaction", function () {
         $transaction = new Transaction(
             accountFrom: $this->account,
             value: 50,
@@ -55,7 +55,7 @@ describe("Transaction Unit Test", function () {
         assertEquals($transaction->status, StatusTransaction::PENDING);
     });
 
-    it("Creating a new transaction with the same account", function () {
+    test("Creating a new transaction with the same account", function () {
         $pix = new PixKey(
             bank: $this->bank,
             kind: KindPixKey::EMAIL,
@@ -71,21 +71,21 @@ describe("Transaction Unit Test", function () {
         ))->toThrow(new NotificationException('account: the source and destination account cannot be the same'));
     });
 
-    it("Creating a new transaction with the value is zero", fn() => expect(fn() => new Transaction(
+    test("Creating a new transaction with the value is zero", fn() => expect(fn() => new Transaction(
         accountFrom: $this->account,
         value: 0.00,
         pixKeyTo: $this->pixKeyTo,
         description: 'testing',
     ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
 
-    it("Creating a new transaction with the value is negative", fn() => expect(fn() => new Transaction(
+    test("Creating a new transaction with the value is negative", fn() => expect(fn() => new Transaction(
         accountFrom: $this->account,
         value: -1,
         pixKeyTo: $this->pixKeyTo,
         description: 'testing',
     ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
 
-    it("Confirmation a transaction", function () {
+    test("Confirmation a transaction", function () {
         $transaction = new Transaction(
             accountFrom: $this->account,
             value: 50,
@@ -97,7 +97,7 @@ describe("Transaction Unit Test", function () {
         assertEquals(StatusTransaction::CONFIRMED, $transaction->status);
     });
 
-    it("Complete a transaction", function () {
+    test("Complete a transaction", function () {
         $transaction = new Transaction(
             accountFrom: $this->account,
             value: 50,
@@ -109,7 +109,7 @@ describe("Transaction Unit Test", function () {
         assertEquals(StatusTransaction::COMPLETED, $transaction->status);
     });
 
-    it("Error a transaction", function () {
+    test("Error a transaction", function () {
         $transaction = new Transaction(
             accountFrom: $this->account,
             value: 50,

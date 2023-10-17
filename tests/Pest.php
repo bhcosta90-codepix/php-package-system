@@ -43,7 +43,7 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function mockAccountPixRepository(array $actions = []): PixKeyRepositoryInterface|MockInterface
+function mockPixKeyRepositoryInterface(array $actions = []): PixKeyRepositoryInterface|MockInterface
 {
     $response = Mockery::mock(PixKeyRepositoryInterface::class);
     mockAction($actions, $response);
