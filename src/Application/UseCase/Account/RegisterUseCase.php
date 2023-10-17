@@ -6,7 +6,6 @@ namespace CodePix\System\Application\UseCase\Account;
 
 use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
 use CodePix\System\Application\UseCase\Account\DTO\Register\Output;
-use CodePix\System\Application\UseCase\Account\Exception\AccountException;
 use CodePix\System\Domain\Entities\Account;
 use CodePix\System\Domain\Repository\AccountRepository;
 use Throwable;
@@ -23,7 +22,7 @@ class RegisterUseCase
      */
     public function handle(Input $input): Output
     {
-        if ($account = $this->accountRepository->existThisCount(
+        if ($account = $this->accountRepository->findAccount(
             bank: $input->bank,
             agency: $input->agency,
             account: $input->account

@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
-use CodePix\System\Application\UseCase\Account\Exception\AccountException;
 use CodePix\System\Application\UseCase\Account\RegisterUseCase;
+use CodePix\System\Domain\Entities\Account;
+use Costa\Entity\ValueObject\Uuid;
 
 use function PHPUnit\Framework\assertNotNull;
 
@@ -19,7 +20,7 @@ describe("RegisterUseCase Unit Test", function () {
 
         $useCase = new RegisterUseCase(
             accountRepository: mockAccountRepository([
-                'existThisCount' => fn() => false,
+                'findAccount' => fn() => null,
                 'create' => fn() => true,
             ]),
         );
@@ -37,9 +38,16 @@ describe("RegisterUseCase Unit Test", function () {
             account: 'testing'
         );
 
+        $id = Uuid::make();
+
         $useCase = new RegisterUseCase(
             accountRepository: mockAccountRepository([
-                'existThisCount' => fn() => true,
+                'findAccount' => fn() => Account::from(
+                    id: $id,
+                    bank: '1',
+                    agency: '1',
+                    account: 'testing'
+                ),
                 'create' => [
                     'action' => fn() => true,
                     'times' => 0,
@@ -47,7 +55,7 @@ describe("RegisterUseCase Unit Test", function () {
             ]),
         );
 
-        expect(fn() => $useCase->handle($input))
-            ->toThrow(new AccountException(message: 'This account already exists', code: 400));
+        $response = $useCase->handle($input);
+        expect($response->id)->toBe((string)$id);
     });
 });
