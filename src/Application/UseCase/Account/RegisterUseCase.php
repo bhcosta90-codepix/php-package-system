@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace CodePix\System\Application\UseCase\Account;
 
+use CodePix\System\Application\DTO\Account\Register\Input;
+use CodePix\System\Application\DTO\Account\Register\Output;
 use CodePix\System\Application\Responses\ResponseEnum;
-use CodePix\System\Application\UseCase\Account\DTO\Register\Input;
-use CodePix\System\Application\UseCase\Account\DTO\Register\Output;
 use CodePix\System\Domain\Entities\AccountPix;
 use CodePix\System\Domain\Entities\Enum\AccountPix\TypeAccountPix;
 use CodePix\System\Domain\Repository\AccountPixRepository;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CodePix\System\Application\UseCase\Account\DTO\Register;
+namespace CodePix\System\Application\DTO\Account\Register;
 
 use CodePix\System\Application\Responses\ResponseEnum;
 
