@@ -55,6 +55,7 @@ class TransactionUseCase
 
     /**
      * @throws NotFoundException
+     * @throws UseCaseException
      */
     public function confirm(string $id): Transaction
     {
@@ -63,13 +64,18 @@ class TransactionUseCase
         }
 
         $transaction->confirmed();
-        $this->transactionRepository->save($transaction);
+        $response = $this->transactionRepository->save($transaction);
+
+        if(!$response){
+            throw new UseCaseException();
+        }
 
         return $transaction;
     }
 
     /**
      * @throws NotFoundException
+     * @throws UseCaseException
      */
     public function complete(string $id): Transaction
     {
@@ -78,13 +84,18 @@ class TransactionUseCase
         }
 
         $transaction->complete();
-        $this->transactionRepository->save($transaction);
+        $response = $this->transactionRepository->save($transaction);
+
+        if(!$response){
+            throw new UseCaseException();
+        }
 
         return $transaction;
     }
 
     /**
      * @throws NotFoundException
+     * @throws UseCaseException
      */
     public function error(string $id, string $description): Transaction
     {
@@ -93,7 +104,11 @@ class TransactionUseCase
         }
 
         $transaction->error($description);
-        $this->transactionRepository->save($transaction);
+        $response = $this->transactionRepository->save($transaction);
+
+        if(!$response){
+            throw new UseCaseException();
+        }
 
         return $transaction;
     }

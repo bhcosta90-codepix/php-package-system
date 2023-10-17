@@ -25,6 +25,7 @@
 */
 
 use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
+use CodePix\System\Domain\Repository\TransactionRepositoryInterface;
 use CodePix\System\Domain\Repository\UserRepository;
 use Mockery\MockInterface;
 
@@ -46,6 +47,13 @@ expect()->extend('toBeOne', function () {
 function mockPixKeyRepositoryInterface(array $actions = []): PixKeyRepositoryInterface|MockInterface
 {
     $response = Mockery::mock(PixKeyRepositoryInterface::class);
+    mockAction($actions, $response);
+    return $response;
+}
+
+function mockTransactionRepositoryInterface(array $actions = []): TransactionRepositoryInterface|MockInterface
+{
+    $response = Mockery::mock(TransactionRepositoryInterface::class);
     mockAction($actions, $response);
     return $response;
 }
