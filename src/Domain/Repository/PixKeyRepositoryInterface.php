@@ -14,8 +14,6 @@ interface PixKeyRepositoryInterface
 
     public function findKeyByKind(string $key, string $kind): ?PixKey;
 
-    public function addBank(Bank $bank);
-
     public function addAccount(Account $account);
 
     public function findAccount(string $id): ?Account;
