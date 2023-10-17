@@ -8,7 +8,7 @@ use CodePix\System\Application\Responses\ResponseEnum;
 
 class Output
 {
-    public function __construct(public bool $status)
+    public function __construct(public bool $success, public ResponseEnum $status)
     {
     }
 }

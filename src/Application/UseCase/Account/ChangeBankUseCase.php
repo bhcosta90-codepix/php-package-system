@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CodePix\System\Application\UseCase\Account;
 
 use CodePix\System\Application\Exception\NotFoundException;
+use CodePix\System\Application\Responses\ResponseEnum;
 use CodePix\System\Application\UseCase\Account\DTO\Account\Change\Input;
 use CodePix\System\Application\UseCase\Account\DTO\Account\Change\Output;
 use CodePix\System\Domain\Repository\AccountPixRepository;
@@ -27,14 +28,16 @@ class ChangeBankUseCase
             throw new NotFoundException('This pix account do not found');
         }
 
-        $status = false;
+        $success = false;
+
         if ($input->bank != (string)$input->bank) {
             $account->changeBank($input->bank);
-            $status = $this->accountRepository->update($account);
+            $success = $this->accountRepository->update($account);
         }
 
         return new Output(
-            status: $status
+            success: $success,
+            status: ResponseEnum::OK,
         );
     }
 }
