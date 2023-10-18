@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use CodePix\System\Application\Exception\BadRequestException;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\UseCase\AccountUseCase;
 use CodePix\System\Domain\Entities\Account;
@@ -12,10 +13,23 @@ describe("AccountUseCase Unit Test", function () {
         $account = new AccountUseCase(
             pixKeyRepository: mockPixKeyRepositoryInterface([
                 'addAccount' => fn() => true,
+                'findAccountByBankAgencyNumber' => fn() => false,
             ]),
         );
 
         $account->register((string)Uuid::make(), "testing", "0001", "0002");
+    });
+
+    test("Exception - when the account already exist", function () {
+        $account = new AccountUseCase(
+            pixKeyRepository: mockPixKeyRepositoryInterface([
+                'findAccountByBankAgencyNumber' => fn() => true,
+            ]),
+        );
+
+        expect(fn() => $account->register((string)Uuid::make(), "testing", "0001", "0002"))->toThrow(
+            BadRequestException::class
+        );
     });
 
     test("Find account", function () {
