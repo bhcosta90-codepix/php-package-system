@@ -24,8 +24,8 @@ class AccountUseCase
      */
     public function register(string $bank, string $name, string $agency, string $number): Account
     {
-        if ($this->pixKeyRepository->findAccountByBankAgencyNumber($bank, $agency, $number)) {
-            throw new BadRequestException("Account already exist");
+        if ($account = $this->pixKeyRepository->findAccountByBankAgencyNumber($bank, $agency, $number)) {
+            throw new BadRequestException("Account already exist with id: " . $account);
         }
 
         $account = new Account(
