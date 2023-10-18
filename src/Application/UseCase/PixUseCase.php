@@ -23,6 +23,7 @@ class PixUseCase
     /**
      * @throws NotFoundException
      * @throws UseCaseException
+     * @throws BadRequestException
      */
     public function register(string $kind, string $key, string $account): PixKey
     {
