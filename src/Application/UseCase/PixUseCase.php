@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodePix\System\Application\UseCase;
 
+use CodePix\System\Application\Exception\BadRequestException;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
@@ -22,6 +23,7 @@ class PixUseCase
     /**
      * @throws NotFoundException
      * @throws UseCaseException
+     * @throws BadRequestException
      */
     public function register(string $kind, string $key, string $account): PixKey
     {
@@ -29,6 +31,9 @@ class PixUseCase
             throw new NotFoundException('Account not found');
         }
 
+        if($this->pixKeyRepository->findKeyByKind($kind, $key)){
+            throw new BadRequestException();
+        }
 
         $pix = new PixKey(
             bank: $account->bank,

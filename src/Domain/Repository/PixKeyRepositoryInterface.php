@@ -12,10 +12,11 @@ interface PixKeyRepositoryInterface
 {
     public function register(PixKey $pixKey): bool;
 
-    public function findKeyByKind(string $key, string $kind): ?PixKey;
+    public function findKeyByKind(string $kind, string $key): ?PixKey;
 
     public function addAccount(Account $account): void;
 
     public function findAccountByBankAgencyNumber(string $bank, string $agency, string $number): ?Uuid;
+
     public function findAccount(string $id): ?Account;
 }
