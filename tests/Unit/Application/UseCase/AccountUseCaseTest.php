@@ -13,7 +13,7 @@ describe("AccountUseCase Unit Test", function () {
         $account = new AccountUseCase(
             pixKeyRepository: mockPixKeyRepositoryInterface([
                 'addAccount' => fn() => true,
-                'findAccountByBankAgencyNumber' => fn() => false,
+                'findAccountByBankAgencyNumber' => fn() => null,
             ]),
         );
 
@@ -23,7 +23,7 @@ describe("AccountUseCase Unit Test", function () {
     test("Exception - when the account already exist", function () {
         $account = new AccountUseCase(
             pixKeyRepository: mockPixKeyRepositoryInterface([
-                'findAccountByBankAgencyNumber' => fn() => true,
+                'findAccountByBankAgencyNumber' => fn() => Uuid::make(),
             ]),
         );
 
