@@ -15,5 +15,6 @@ interface PixKeyRepositoryInterface
 
     public function addAccount(Account $account): void;
 
+    public function findAccountByBankAgencyNumber(string $bank, string $agency, string $number): ?Account;
     public function findAccount(string $id): ?Account;
 }
