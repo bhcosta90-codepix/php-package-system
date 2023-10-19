@@ -6,7 +6,7 @@ namespace CodePix\System\Application\Exception;
 
 use Exception;
 
-class EntityRequestException extends Exception
+class EntityException extends Exception
 {
 
 }
