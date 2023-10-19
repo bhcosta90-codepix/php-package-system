@@ -21,24 +21,19 @@ class PixUseCase
     }
 
     /**
-     * @throws NotFoundException
      * @throws UseCaseException
      * @throws BadRequestException
      */
-    public function register(string $kind, string $key, string $account): PixKey
+    public function register(string $bank, string $account, string $kind, string $key): PixKey
     {
-        if (!$account = $this->pixKeyRepository->findAccount($account)) {
-            throw new NotFoundException('Account not found');
-        }
-
-        if($this->pixKeyRepository->findKeyByKind($kind, $key)){
+        if ($this->pixKeyRepository->findKeyByKind($kind, $key)) {
             throw new BadRequestException();
         }
 
         $pix = new PixKey(
-            bank: $account->bank,
+            bank: new Uuid($bank),
+            account: new Uuid($account),
             kind: KindPixKey::from($kind),
-            account: $account,
             key: $key,
         );
 

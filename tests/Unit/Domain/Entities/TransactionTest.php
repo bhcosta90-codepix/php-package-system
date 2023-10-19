@@ -22,31 +22,17 @@ describe("Transaction Unit Test", function () {
     beforeEach(function () {
         $this->bank = Uuid::make();
 
-        $this->account = new Account(
-            name: 'testing',
-            bank: $this->bank,
-            agency: '0001',
-            number: '0001'
-        );
-
-        $this->accountPix = new Account(
-            name: 'testing',
-            bank: $this->bank,
-            agency: '0001',
-            number: '0001'
-        );
-
         $this->pixKeyTo = new PixKey(
             bank: $this->bank,
+            account: $this->account = Uuid::make(),
             kind: KindPixKey::EMAIL,
-            account: $this->accountPix,
             key: 'testing@test.com'
         );
     });
 
     test("Creating a new transaction", function () {
         $transaction = new Transaction(
-            accountFrom: $this->account,
+            accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
             description: 'testing',
@@ -58,8 +44,8 @@ describe("Transaction Unit Test", function () {
     test("Creating a new transaction with the same account", function () {
         $pix = new PixKey(
             bank: $this->bank,
-            kind: KindPixKey::EMAIL,
             account: $this->account,
+            kind: KindPixKey::EMAIL,
             key: 'testing@test.com'
         );
 
@@ -72,14 +58,14 @@ describe("Transaction Unit Test", function () {
     });
 
     test("Creating a new transaction with the value is zero", fn() => expect(fn() => new Transaction(
-        accountFrom: $this->account,
+        accountFrom: Uuid::make(),
         value: 0.00,
         pixKeyTo: $this->pixKeyTo,
         description: 'testing',
     ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
-
+//
     test("Creating a new transaction with the value is negative", fn() => expect(fn() => new Transaction(
-        accountFrom: $this->account,
+        accountFrom: Uuid::make(),
         value: -1,
         pixKeyTo: $this->pixKeyTo,
         description: 'testing',
@@ -87,7 +73,7 @@ describe("Transaction Unit Test", function () {
 
     test("Confirmation a transaction", function () {
         $transaction = new Transaction(
-            accountFrom: $this->account,
+            accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
             description: 'testing',
@@ -99,7 +85,7 @@ describe("Transaction Unit Test", function () {
 
     test("Complete a transaction", function () {
         $transaction = new Transaction(
-            accountFrom: $this->account,
+            accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
             description: 'testing',
@@ -111,7 +97,7 @@ describe("Transaction Unit Test", function () {
 
     test("Error a transaction", function () {
         $transaction = new Transaction(
-            accountFrom: $this->account,
+            accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
             description: 'testing',

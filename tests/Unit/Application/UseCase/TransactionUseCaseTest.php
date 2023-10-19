@@ -5,7 +5,6 @@ declare(strict_types=1);
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Application\UseCase\TransactionUseCase;
-use CodePix\System\Domain\Entities\Account;
 use CodePix\System\Domain\Entities\Enum\Transaction\StatusTransaction;
 use CodePix\System\Domain\Entities\PixKey;
 use CodePix\System\Domain\Entities\Transaction;
@@ -14,29 +13,15 @@ use Costa\Entity\ValueObject\Uuid;
 use function PHPUnit\Framework\assertEquals;
 
 beforeEach(function () {
-    $this->account = new Account(
-        name: 'bruno costa',
-        bank: Uuid::make(),
-        agency: '0001',
-        number: '0002',
-    );
-
-    $this->accountPix = new Account(
-        name: 'bruno costa',
-        bank: Uuid::make(),
-        agency: '0001',
-        number: '0002',
-    );
-
     $this->pix = new PixKey(
         bank: Uuid::make(),
+        account: Uuid::make(),
         kind: CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey::EMAIL,
-        account: $this->accountPix,
         key: 'test@test.com',
     );
 
     $this->transaction = new Transaction(
-        accountFrom: $this->account,
+        accountFrom: Uuid::make(),
         value: 50,
         pixKeyTo: $this->pix,
         description: 'testing'
@@ -47,7 +32,6 @@ describe("TransactionUseCase Unit Test", function () {
     test("Register a new transaction", function () {
         $useCase = new TransactionUseCase(
             pixKeyRepository: mockPixKeyRepositoryInterface([
-                'findAccount' => fn() => $this->account,
                 'findKeyByKind' => fn() => $this->pix,
             ]),
             transactionRepository: mockTransactionRepositoryInterface([
@@ -55,13 +39,12 @@ describe("TransactionUseCase Unit Test", function () {
             ]),
         );
 
-        $useCase->register($this->account->id(), 50, "email", "test@test.com", "testing");
+        $useCase->register((string) Uuid::make(), 50, "email", "test@test.com", "testing");
     });
 
     test("Exception -> Register a new transaction", function () {
         $useCase = new TransactionUseCase(
             pixKeyRepository: mockPixKeyRepositoryInterface([
-                'findAccount' => fn() => $this->account,
                 'findKeyByKind' => fn() => $this->pix,
             ]),
             transactionRepository: mockTransactionRepositoryInterface([
@@ -69,49 +52,8 @@ describe("TransactionUseCase Unit Test", function () {
             ]),
         );
 
-        expect(fn() => $useCase->register($this->account->id(), 50, "email", "test@test.com", "testing"))->toThrow(
+        expect(fn() => $useCase->register((string) Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
             UseCaseException::class
-        );
-    });
-
-    test("Exception when do not account", function () {
-        $useCase = new TransactionUseCase(
-            pixKeyRepository: mockPixKeyRepositoryInterface([
-                'findAccount' => fn() => null,
-                'findKeyByKind' => [
-                    'action' => fn() => $this->pix,
-                    'times' => 0,
-                ],
-            ]),
-            transactionRepository: mockTransactionRepositoryInterface([
-                'register' => [
-                    'action' => fn() => false,
-                    'times' => 0,
-                ],
-            ]),
-        );
-
-        expect(fn() => $useCase->register($this->account->id(), 50, "email", "test@test.com", "testing"))->toThrow(
-            NotFoundException::class
-        );
-    });
-
-    test("Exception when do not pix", function () {
-        $useCase = new TransactionUseCase(
-            pixKeyRepository: mockPixKeyRepositoryInterface([
-                'findAccount' => fn() => $this->account,
-                'findKeyByKind' => fn() => null,
-            ]),
-            transactionRepository: mockTransactionRepositoryInterface([
-                'register' => [
-                    'action' => fn() => false,
-                    'times' => 0,
-                ],
-            ]),
-        );
-
-        expect(fn() => $useCase->register($this->account->id(), 50, "email", "test@test.com", "testing"))->toThrow(
-            NotFoundException::class
         );
     });
 

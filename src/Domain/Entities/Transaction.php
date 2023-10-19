@@ -6,11 +6,12 @@ namespace CodePix\System\Domain\Entities;
 
 use CodePix\System\Domain\Entities\Enum\Transaction\StatusTransaction;
 use Costa\Entity\Data;
+use Costa\Entity\ValueObject\Uuid;
 
 class Transaction extends Data
 {
     public function __construct(
-        protected Account $accountFrom,
+        protected Uuid $accountFrom,
         protected float $value,
         protected PixKey $pixKeyTo,
         protected string $description,
@@ -38,7 +39,7 @@ class Transaction extends Data
 
     protected function validated(): void
     {
-        if ($this->accountFrom->id() == $this->pixKeyTo->account->id()) {
+        if ($this->accountFrom == $this->pixKeyTo->account) {
             $this->notification()->push(
                 'account',
                 'the source and destination account cannot be the same'
