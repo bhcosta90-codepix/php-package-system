@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CodePix\System\Application\UseCase;
 
 use CodePix\System\Application\Exception\BadRequestException;
+use CodePix\System\Application\Exception\EntityException;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
@@ -22,12 +23,12 @@ class PixUseCase
 
     /**
      * @throws UseCaseException
-     * @throws BadRequestException
+     * @throws EntityException
      */
     public function register(string $bank, string $account, string $kind, string $key): PixKey
     {
         if ($this->pixKeyRepository->findKeyByKind($kind, $key)) {
-            throw new BadRequestException();
+            throw new EntityException("Entity already exist");
         }
 
         $pix = new PixKey(

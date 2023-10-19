@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use CodePix\System\Application\Exception\BadRequestException;
+use CodePix\System\Application\Exception\EntityException;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Application\UseCase\PixUseCase;
@@ -42,7 +43,7 @@ describe("PixUseCase Unit Test", function () {
 
             expect(fn() => $useCase->register('90e4d7c0-6d08-11ee-b962-0242ac120003', 'email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002'))
                 ->toThrow(
-                    BadRequestException::class
+                    EntityException::class
                 );
         });
     });
