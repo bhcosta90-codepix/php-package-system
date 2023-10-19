@@ -12,8 +12,8 @@ class PixKey extends Data
 {
     public function __construct(
         protected Uuid $bank,
+        protected Uuid $account,
         protected KindPixKey $kind,
-        protected Account $account,
         protected string $key,
         protected bool $status = true,
     ) {

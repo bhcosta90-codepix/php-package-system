@@ -12,12 +12,7 @@ use CodePix\System\Domain\Entities\PixKey;
 use Costa\Entity\ValueObject\Uuid;
 
 beforeEach(function(){
-    $this->account = new Account(
-        name: 'bruno costa',
-        bank: Uuid::make(),
-        agency: '0001',
-        number: '0002',
-    );
+    $this->account = Uuid::make();
 });
 
 describe("PixUseCase Unit Test", function () {
@@ -25,59 +20,29 @@ describe("PixUseCase Unit Test", function () {
         test("Creating a new pix", function () {
             $useCase = new PixUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface([
-                    'findAccount' => fn() => $this->account,
                     'findKeyByKind' => fn() => null,
                     'register' => fn() => true,
                 ])
             );
 
-            $useCase->register('email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002');
-        });
-
-        test("Exception - Find By Key", function () {
-            $useCase = new PixUseCase(
-                pixKeyRepository: mockPixKeyRepositoryInterface([
-                    'findAccount' => fn() => null,
-                ])
-            );
-
-            expect(fn() => $useCase->register('email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002'))
-                ->toThrow(
-                    NotFoundException::class
-                );
+            $useCase->register((string) Uuid::make(), (string) Uuid::make(), 'email', 'test@test.com');
         });
 
         test("Exception - Not found account", function () {
             $useCase = new PixUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface([
-                    'findAccount' => fn() => $this->account,
                     'findKeyByKind' => fn() => new PixKey(
                         bank: Uuid::make(),
+                        account: Uuid::make(),
                         kind: CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey::EMAIL,
-                        account: $this->account,
                         key: 'test@test.com',
                     ),
                 ])
             );
 
-            expect(fn() => $useCase->register('email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002'))
+            expect(fn() => $useCase->register('90e4d7c0-6d08-11ee-b962-0242ac120003', 'email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002'))
                 ->toThrow(
                     BadRequestException::class
-                );
-        });
-
-        test("Exception - Creating a new pix", function () {
-            $useCase = new PixUseCase(
-                pixKeyRepository: mockPixKeyRepositoryInterface([
-                    'findAccount' => fn() => $this->account,
-                    'findKeyByKind' => fn() => null,
-                    'register' => fn() => false,
-                ])
-            );
-
-            expect(fn() => $useCase->register('email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002'))
-                ->toThrow(
-                    UseCaseException::class
                 );
         });
     });
@@ -88,8 +53,8 @@ describe("PixUseCase Unit Test", function () {
                 pixKeyRepository: mockPixKeyRepositoryInterface([
                     'findKeyByKind' => fn() => new PixKey(
                         bank: Uuid::make(),
+                        account: Uuid::make(),
                         kind: KindPixKey::EMAIL,
-                        account: $this->account,
                         key: 'test@test.com',
                     ),
                 ])
