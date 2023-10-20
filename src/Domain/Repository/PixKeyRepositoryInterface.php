@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace CodePix\System\Domain\Repository;
 
-use CodePix\System\Domain\Entities\Account;
 use CodePix\System\Domain\Entities\PixKey;
-use Costa\Entity\ValueObject\Uuid;
 
 interface PixKeyRepositoryInterface
 {

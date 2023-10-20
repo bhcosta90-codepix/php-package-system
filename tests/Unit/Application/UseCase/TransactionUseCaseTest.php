@@ -39,7 +39,7 @@ describe("TransactionUseCase Unit Test", function () {
             ]),
         );
 
-        $useCase->register((string) Uuid::make(), 50, "email", "test@test.com", "testing");
+        $useCase->register((string)Uuid::make(), 50, "email", "test@test.com", "testing");
     });
 
     test("Exception -> Register a new transaction", function () {
@@ -52,7 +52,7 @@ describe("TransactionUseCase Unit Test", function () {
             ]),
         );
 
-        expect(fn() => $useCase->register((string) Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
+        expect(fn() => $useCase->register((string)Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
             UseCaseException::class
         );
     });
@@ -71,7 +71,7 @@ describe("TransactionUseCase Unit Test", function () {
             assertEquals(StatusTransaction::CONFIRMED, $response->status);
         });
 
-        test("Exception - Find", function(){
+        test("Exception - Find", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
@@ -79,10 +79,12 @@ describe("TransactionUseCase Unit Test", function () {
                 ]),
             );
 
-            expect(fn() => $useCase->confirm("4990146a-6d0e-11ee-b962-0242ac120002"))->toThrow(NotFoundException::class);
+            expect(fn() => $useCase->confirm("4990146a-6d0e-11ee-b962-0242ac120002"))->toThrow(
+                NotFoundException::class
+            );
         });
 
-        test("Exception - Register", function(){
+        test("Exception - Register", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
@@ -109,7 +111,7 @@ describe("TransactionUseCase Unit Test", function () {
             assertEquals(StatusTransaction::COMPLETED, $response->status);
         });
 
-        test("Exception - Find", function(){
+        test("Exception - Find", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
@@ -117,10 +119,12 @@ describe("TransactionUseCase Unit Test", function () {
                 ]),
             );
 
-            expect(fn() => $useCase->complete("4990146a-6d0e-11ee-b962-0242ac120002"))->toThrow(NotFoundException::class);
+            expect(fn() => $useCase->complete("4990146a-6d0e-11ee-b962-0242ac120002"))->toThrow(
+                NotFoundException::class
+            );
         });
 
-        test("Exception - Register", function(){
+        test("Exception - Register", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
@@ -129,7 +133,9 @@ describe("TransactionUseCase Unit Test", function () {
                 ]),
             );
 
-            expect(fn() => $useCase->complete("4990146a-6d0e-11ee-b962-0242ac120002"))->toThrow(UseCaseException::class);
+            expect(fn() => $useCase->complete("4990146a-6d0e-11ee-b962-0242ac120002"))->toThrow(
+                UseCaseException::class
+            );
         });
     });
 
@@ -148,7 +154,7 @@ describe("TransactionUseCase Unit Test", function () {
             assertEquals("testing", $response->cancelDescription);
         });
 
-        test("Exception - Find", function(){
+        test("Exception - Find", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
@@ -156,10 +162,12 @@ describe("TransactionUseCase Unit Test", function () {
                 ]),
             );
 
-            expect(fn() => $useCase->error("4990146a-6d0e-11ee-b962-0242ac120002", "testing"))->toThrow(NotFoundException::class);
+            expect(fn() => $useCase->error("4990146a-6d0e-11ee-b962-0242ac120002", "testing"))->toThrow(
+                NotFoundException::class
+            );
         });
 
-        test("Exception - Register", function(){
+        test("Exception - Register", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
@@ -168,7 +176,9 @@ describe("TransactionUseCase Unit Test", function () {
                 ]),
             );
 
-            expect(fn() => $useCase->error("4990146a-6d0e-11ee-b962-0242ac120002", "testing"))->toThrow(UseCaseException::class);
+            expect(fn() => $useCase->error("4990146a-6d0e-11ee-b962-0242ac120002", "testing"))->toThrow(
+                UseCaseException::class
+            );
         });
     });
 });

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CodePix\System\Application\UseCase;
 
-use CodePix\System\Application\Exception\BadRequestException;
 use CodePix\System\Application\Exception\EntityException;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;

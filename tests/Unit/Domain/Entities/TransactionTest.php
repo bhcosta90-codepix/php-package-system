@@ -2,17 +2,12 @@
 
 declare(strict_types=1);
 
-use CodePix\System\Domain\Entities\Account;
-use CodePix\System\Domain\Entities\Bank;
 use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
 use CodePix\System\Domain\Entities\Enum\Transaction\StatusTransaction;
 use CodePix\System\Domain\Entities\PixKey;
 use CodePix\System\Domain\Entities\Transaction;
-
 use Costa\Entity\Contracts\DataInterface;
-
 use Costa\Entity\Exceptions\NotificationException;
-
 use Costa\Entity\ValueObject\Uuid;
 
 use function PHPUnit\Framework\assertEquals;
