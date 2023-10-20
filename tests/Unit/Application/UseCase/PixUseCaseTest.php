@@ -2,22 +2,19 @@
 
 declare(strict_types=1);
 
-use CodePix\System\Application\Exception\BadRequestException;
 use CodePix\System\Application\Exception\EntityException;
 use CodePix\System\Application\Exception\NotFoundException;
-use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Application\UseCase\PixUseCase;
-use CodePix\System\Domain\Entities\Account;
 use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
 use CodePix\System\Domain\Entities\PixKey;
 use Costa\Entity\ValueObject\Uuid;
 
-beforeEach(function(){
+beforeEach(function () {
     $this->account = Uuid::make();
 });
 
 describe("PixUseCase Unit Test", function () {
-    describe("Action - Register", function() {
+    describe("Action - Register", function () {
         test("Creating a new pix", function () {
             $useCase = new PixUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface([
@@ -26,7 +23,7 @@ describe("PixUseCase Unit Test", function () {
                 ])
             );
 
-            $useCase->register((string) Uuid::make(), (string) Uuid::make(), 'email', 'test@test.com');
+            $useCase->register((string)Uuid::make(), (string)Uuid::make(), 'email', 'test@test.com');
         });
 
         test("Exception - Not found account", function () {
@@ -41,15 +38,22 @@ describe("PixUseCase Unit Test", function () {
                 ])
             );
 
-            expect(fn() => $useCase->register('90e4d7c0-6d08-11ee-b962-0242ac120003', 'email', 'test@test.com', '90e4d7c0-6d08-11ee-b962-0242ac120002'))
+            expect(
+                fn() => $useCase->register(
+                    '90e4d7c0-6d08-11ee-b962-0242ac120003',
+                    'email',
+                    'test@test.com',
+                    '90e4d7c0-6d08-11ee-b962-0242ac120002'
+                )
+            )
                 ->toThrow(
                     EntityException::class
                 );
         });
     });
 
-    describe("Action - Find", function(){
-        test("Get a pix", function(){
+    describe("Action - Find", function () {
+        test("Get a pix", function () {
             $useCase = new PixUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface([
                     'findKeyByKind' => fn() => new PixKey(
@@ -64,7 +68,7 @@ describe("PixUseCase Unit Test", function () {
             $useCase->find('email', 'test@test.com');
         });
 
-        test("Exception - Get a pix", function(){
+        test("Exception - Get a pix", function () {
             $useCase = new PixUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface([
                     'findKeyByKind' => fn() => null,

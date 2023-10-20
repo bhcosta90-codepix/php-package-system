@@ -6,8 +6,6 @@ namespace CodePix\System\Application\UseCase;
 
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
-use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
-use CodePix\System\Domain\Entities\PixKey;
 use CodePix\System\Domain\Entities\Transaction;
 use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
 use CodePix\System\Domain\Repository\TransactionRepositoryInterface;
@@ -62,7 +60,7 @@ class TransactionUseCase
         $transaction->confirmed();
         $response = $this->transactionRepository->save($transaction);
 
-        if(!$response){
+        if (!$response) {
             throw new UseCaseException();
         }
 
@@ -82,7 +80,7 @@ class TransactionUseCase
         $transaction->complete();
         $response = $this->transactionRepository->save($transaction);
 
-        if(!$response){
+        if (!$response) {
             throw new UseCaseException();
         }
 
@@ -102,7 +100,7 @@ class TransactionUseCase
         $transaction->error($description);
         $response = $this->transactionRepository->save($transaction);
 
-        if(!$response){
+        if (!$response) {
             throw new UseCaseException();
         }
 
