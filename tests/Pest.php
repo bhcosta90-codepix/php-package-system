@@ -24,6 +24,7 @@
 |
 */
 
+use BRCas\CA\Contracts\Event\EventManagerInterface;
 use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
 use CodePix\System\Domain\Repository\TransactionRepositoryInterface;
 use CodePix\System\Domain\Repository\UserRepository;
@@ -43,6 +44,12 @@ expect()->extend('toBeOne', function () {
 | global functions to help you to reduce the number of lines of code in your test files.
 |
 */
+
+function mockEventManager($times = 1): EventManagerInterface|MockInterface{
+    $response = Mockery::mock(EventManagerInterface::class);
+    $response->shouldReceive('dispatch')->times($times);
+    return $response;
+}
 
 function mockPixKeyRepositoryInterface(array $actions = []): PixKeyRepositoryInterface|MockInterface
 {

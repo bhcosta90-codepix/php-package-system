@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CodePix\System\Application\UseCase;
 
+use BRCas\CA\Contracts\Event\EventManagerInterface;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Domain\Entities\Transaction;
@@ -17,6 +18,7 @@ class TransactionUseCase
     public function __construct(
         protected PixKeyRepositoryInterface $pixKeyRepository,
         protected TransactionRepositoryInterface $transactionRepository,
+        protected EventManagerInterface $eventManager,
     ) {
         //
     }
@@ -45,6 +47,8 @@ class TransactionUseCase
         if (!$response) {
             throw new UseCaseException();
         }
+
+        $this->eventManager->dispatch($transaction->getEvents());
 
         return $transaction;
     }
