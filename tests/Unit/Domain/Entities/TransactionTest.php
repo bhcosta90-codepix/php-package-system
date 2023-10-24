@@ -27,6 +27,7 @@ describe("Transaction Unit Test", function () {
 
     test("Creating a new transaction", function () {
         $transaction = new Transaction(
+            debit: Uuid::make(),
             bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
@@ -46,6 +47,7 @@ describe("Transaction Unit Test", function () {
         );
 
         expect(fn() => new Transaction(
+            debit: Uuid::make(),
             bank: Uuid::make(),
             accountFrom: $this->account,
             value: 50,
@@ -55,6 +57,7 @@ describe("Transaction Unit Test", function () {
     });
 
     test("Creating a new transaction with the value is zero", fn() => expect(fn() => new Transaction(
+        debit: Uuid::make(),
         bank: Uuid::make(),
         accountFrom: Uuid::make(),
         value: 0.00,
@@ -63,6 +66,7 @@ describe("Transaction Unit Test", function () {
     ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
 //
     test("Creating a new transaction with the value is negative", fn() => expect(fn() => new Transaction(
+        debit: Uuid::make(),
         bank: Uuid::make(),
         accountFrom: Uuid::make(),
         value: -1,
@@ -72,6 +76,7 @@ describe("Transaction Unit Test", function () {
 
     test("Confirmation a transaction", function () {
         $transaction = new Transaction(
+            debit: Uuid::make(),
             bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
@@ -85,6 +90,7 @@ describe("Transaction Unit Test", function () {
 
     test("Complete a transaction", function () {
         $transaction = new Transaction(
+            debit: Uuid::make(),
             bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
@@ -98,6 +104,7 @@ describe("Transaction Unit Test", function () {
 
     test("Error a transaction", function () {
         $transaction = new Transaction(
+            debit: Uuid::make(),
             bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,

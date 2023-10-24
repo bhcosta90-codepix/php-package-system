@@ -12,6 +12,7 @@ use Costa\Entity\ValueObject\Uuid;
 class Transaction extends Data
 {
     public function __construct(
+        protected Uuid $debit,
         protected Uuid $bank,
         protected Uuid $accountFrom,
         protected float $value,
