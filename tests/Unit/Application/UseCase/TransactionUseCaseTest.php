@@ -22,6 +22,7 @@ beforeEach(function () {
     );
 
     $this->transaction = new Transaction(
+        debit: Uuid::make(),
         bank: Uuid::make(),
         accountFrom: Uuid::make(),
         value: 50,
@@ -42,7 +43,7 @@ describe("TransactionUseCase Unit Test", function () {
             eventManager: mockEventManager()
         );
 
-        $useCase->register((string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing");
+        $useCase->register((string)Uuid::make(), (string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing");
     });
 
     test("Exception -> Register a new transaction", function () {
@@ -56,7 +57,7 @@ describe("TransactionUseCase Unit Test", function () {
             eventManager: mockEventManager(0)
         );
 
-        expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
+        expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
             UseCaseException::class
         );
     });
