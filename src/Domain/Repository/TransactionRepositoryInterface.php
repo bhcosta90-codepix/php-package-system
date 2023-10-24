@@ -13,4 +13,6 @@ interface TransactionRepositoryInterface
     public function save(Transaction $transaction): bool;
 
     public function find(string $id): ?Transaction;
+
+    public function findByDebit(string $id): ?Transaction;
 }

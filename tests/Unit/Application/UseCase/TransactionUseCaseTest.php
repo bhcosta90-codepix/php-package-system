@@ -67,7 +67,7 @@ describe("TransactionUseCase Unit Test", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
-                    "find" => fn() => $this->transaction,
+                    "findByDebit" => fn() => $this->transaction,
                     'save' => fn() => true,
                 ]),
                 eventManager: mockEventManager(0)
@@ -81,7 +81,7 @@ describe("TransactionUseCase Unit Test", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
-                    "find" => fn() => null,
+                    "findByDebit" => fn() => null,
                 ]),
                 eventManager: mockEventManager(0)
             );
@@ -95,7 +95,7 @@ describe("TransactionUseCase Unit Test", function () {
             $useCase = new TransactionUseCase(
                 pixKeyRepository: mockPixKeyRepositoryInterface(),
                 transactionRepository: mockTransactionRepositoryInterface([
-                    "find" => fn() => $this->transaction,
+                    "findByDebit" => fn() => $this->transaction,
                     'save' => fn() => false,
                 ]),
                 eventManager: mockEventManager(0)

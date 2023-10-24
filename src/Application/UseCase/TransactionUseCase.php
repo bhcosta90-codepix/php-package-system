@@ -60,7 +60,7 @@ class TransactionUseCase
      */
     public function confirm(string $id): Transaction
     {
-        if (!$transaction = $this->transactionRepository->find($id)) {
+        if (!$transaction = $this->transactionRepository->findByDebit($id)) {
             throw new NotFoundException('Transaction not found');
         }
 
