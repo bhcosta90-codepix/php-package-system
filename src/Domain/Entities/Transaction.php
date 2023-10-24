@@ -15,6 +15,7 @@ class Transaction extends Data
         protected float $value,
         protected PixKey $pixKeyTo,
         protected string $description,
+        protected ?Uuid $transactionReference = null,
         protected StatusTransaction $status = StatusTransaction::PENDING,
         protected ?string $cancelDescription = null,
     ) {
