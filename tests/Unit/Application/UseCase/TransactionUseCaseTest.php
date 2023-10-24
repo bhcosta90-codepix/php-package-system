@@ -21,6 +21,7 @@ beforeEach(function () {
     );
 
     $this->transaction = new Transaction(
+        bank: Uuid::make(),
         accountFrom: Uuid::make(),
         value: 50,
         pixKeyTo: $this->pix,
@@ -39,7 +40,7 @@ describe("TransactionUseCase Unit Test", function () {
             ]),
         );
 
-        $useCase->register((string)Uuid::make(), 50, "email", "test@test.com", "testing");
+        $useCase->register((string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing");
     });
 
     test("Exception -> Register a new transaction", function () {
@@ -52,7 +53,7 @@ describe("TransactionUseCase Unit Test", function () {
             ]),
         );
 
-        expect(fn() => $useCase->register((string)Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
+        expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
             UseCaseException::class
         );
     });

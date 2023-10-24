@@ -11,10 +11,12 @@ use Costa\Entity\ValueObject\Uuid;
 class Transaction extends Data
 {
     public function __construct(
+        protected Uuid $bank,
         protected Uuid $accountFrom,
         protected float $value,
         protected PixKey $pixKeyTo,
         protected string $description,
+        protected ?Uuid $transactionReference = null,
         protected StatusTransaction $status = StatusTransaction::PENDING,
         protected ?string $cancelDescription = null,
     ) {
