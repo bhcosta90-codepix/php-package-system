@@ -27,6 +27,7 @@ describe("Transaction Unit Test", function () {
 
     test("Creating a new transaction", function () {
         $transaction = new Transaction(
+            bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
@@ -45,6 +46,7 @@ describe("Transaction Unit Test", function () {
         );
 
         expect(fn() => new Transaction(
+            bank: Uuid::make(),
             accountFrom: $this->account,
             value: 50,
             pixKeyTo: $pix,
@@ -53,6 +55,7 @@ describe("Transaction Unit Test", function () {
     });
 
     test("Creating a new transaction with the value is zero", fn() => expect(fn() => new Transaction(
+        bank: Uuid::make(),
         accountFrom: Uuid::make(),
         value: 0.00,
         pixKeyTo: $this->pixKeyTo,
@@ -60,6 +63,7 @@ describe("Transaction Unit Test", function () {
     ))->toThrow(new NotificationException(Transaction::class . ': The Value minimum is 0.01')));
 //
     test("Creating a new transaction with the value is negative", fn() => expect(fn() => new Transaction(
+        bank: Uuid::make(),
         accountFrom: Uuid::make(),
         value: -1,
         pixKeyTo: $this->pixKeyTo,
@@ -68,6 +72,7 @@ describe("Transaction Unit Test", function () {
 
     test("Confirmation a transaction", function () {
         $transaction = new Transaction(
+            bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
@@ -80,6 +85,7 @@ describe("Transaction Unit Test", function () {
 
     test("Complete a transaction", function () {
         $transaction = new Transaction(
+            bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,
@@ -92,6 +98,7 @@ describe("Transaction Unit Test", function () {
 
     test("Error a transaction", function () {
         $transaction = new Transaction(
+            bank: Uuid::make(),
             accountFrom: Uuid::make(),
             value: 50,
             pixKeyTo: $this->pixKeyTo,

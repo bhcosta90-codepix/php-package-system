@@ -26,13 +26,14 @@ class TransactionUseCase
      * @throws UseCaseException
      * @throws NotificationException
      */
-    public function register(string $account, float $value, string $kind, string $key, string $description): Transaction
+    public function register(string $bank, string $account, float $value, string $kind, string $key, string $description): Transaction
     {
         if (!$pix = $this->pixKeyRepository->findKeyByKind($kind, $key)) {
             throw new NotFoundException('Pix not found');
         }
 
         $transaction = new Transaction(
+            bank: new Uuid($bank),
             accountFrom: new Uuid($account),
             value: $value,
             pixKeyTo: $pix,
