@@ -9,6 +9,7 @@ use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Domain\Entities\Transaction;
 use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
 use CodePix\System\Domain\Repository\TransactionRepositoryInterface;
+use Costa\Entity\Exceptions\NotificationException;
 use Costa\Entity\ValueObject\Uuid;
 
 class TransactionUseCase
@@ -23,13 +24,13 @@ class TransactionUseCase
     /**
      * @throws NotFoundException
      * @throws UseCaseException
+     * @throws NotificationException
      */
     public function register(string $account, float $value, string $kind, string $key, string $description): Transaction
     {
         if (!$pix = $this->pixKeyRepository->findKeyByKind($kind, $key)) {
             throw new NotFoundException('Pix not found');
         }
-
 
         $transaction = new Transaction(
             accountFrom: new Uuid($account),
