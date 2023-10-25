@@ -46,6 +46,14 @@ class TransactionUseCase
             return null;
         }
 
+        if ($account == $pix->account) {
+            $this->eventManager->dispatch([
+                new ErrorEvent($bank, (string)$debit, 'the source and destination account cannot be the same'),
+            ]);
+
+            return null;
+        }
+
         $transaction = new Transaction(
             debit: new Uuid($debit),
             bank: new Uuid($bank),
