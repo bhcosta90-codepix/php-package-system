@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use CodePix\System\Application\Exception\EntityException;
 use CodePix\System\Application\Exception\NotFoundException;
+use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Application\UseCase\PixUseCase;
 use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
 use CodePix\System\Domain\Entities\PixKey;
@@ -24,6 +25,17 @@ describe("PixUseCase Unit Test", function () {
             );
 
             $useCase->register((string)Uuid::make(), (string)Uuid::make(), 'email', 'test@test.com');
+        });
+
+        test("Exception - Register error", function () {
+            $useCase = new PixUseCase(
+                pixKeyRepository: mockPixKeyRepositoryInterface([
+                    'findKeyByKind' => fn() => null,
+                    'register' => fn() => false,
+                ])
+            );
+
+            expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), 'email', 'test@test.com'))->toThrow(UseCaseException::class);
         });
 
         test("Exception - Not found account", function () {

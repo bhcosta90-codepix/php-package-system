@@ -11,6 +11,7 @@ class ConfirmationEvent implements EventInterface
 {
     public function __construct(protected Transaction $transaction)
     {
+        //
     }
 
     public function payload(): array

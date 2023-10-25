@@ -12,11 +12,12 @@ use CodePix\System\Domain\Entities\Transaction;
 use Costa\Entity\ValueObject\Uuid;
 
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertNull;
 
 beforeEach(function () {
     $this->pix = new PixKey(
         bank: Uuid::make(),
-        account: Uuid::make(),
+        account: $this->accountFrom = new Uuid('018b68e0-057e-72c5-a07a-3208fd99319f'),
         kind: CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey::EMAIL,
         key: 'test@test.com',
     );
@@ -24,7 +25,7 @@ beforeEach(function () {
     $this->transaction = new Transaction(
         debit: Uuid::make(),
         bank: Uuid::make(),
-        accountFrom: Uuid::make(),
+        accountFrom: new Uuid('018b68e0-0584-7241-be65-f2d7a580fec6'),
         value: 50,
         pixKeyTo: $this->pix,
         description: 'testing'
@@ -44,6 +45,50 @@ describe("TransactionUseCase Unit Test", function () {
         );
 
         $useCase->register((string)Uuid::make(), (string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing");
+    });
+
+    test("Exception -> Pix not found", function () {
+        $useCase = new TransactionUseCase(
+            pixKeyRepository: mockPixKeyRepositoryInterface([
+                'findKeyByKind' => fn() => null,
+            ]),
+            transactionRepository: mockTransactionRepositoryInterface(),
+            eventManager: mockEventManager()
+        );
+
+        $response = $useCase->register(
+            (string)Uuid::make(),
+            (string)Uuid::make(),
+            (string)Uuid::make(),
+            50,
+            "email",
+            "test@test.com",
+            "testing"
+        );
+
+        assertNull($response);
+    });
+
+    test("Exception -> Same a account", function () {
+        $useCase = new TransactionUseCase(
+            pixKeyRepository: mockPixKeyRepositoryInterface([
+                'findKeyByKind' => fn() => $this->pix,
+            ]),
+            transactionRepository: mockTransactionRepositoryInterface(),
+            eventManager: mockEventManager(1)
+        );
+
+        $response = $useCase->register(
+            (string)Uuid::make(),
+            (string)Uuid::make(),
+            (string)$this->accountFrom,
+            50,
+            "email",
+            "test@test.com",
+            "testing"
+        );
+
+        assertNull($response);
     });
 
     test("Exception -> Register a new transaction", function () {
