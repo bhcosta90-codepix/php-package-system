@@ -10,6 +10,7 @@ use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Domain\Entities\Enum\PixKey\KindPixKey;
 use CodePix\System\Domain\Entities\PixKey;
 use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
+use Costa\Entity\Exceptions\NotificationException;
 use Costa\Entity\ValueObject\Uuid;
 
 class PixUseCase
@@ -23,6 +24,7 @@ class PixUseCase
     /**
      * @throws UseCaseException
      * @throws EntityException
+     * @throws NotificationException
      */
     public function register(string $bank, string $account, string $kind, string $key): PixKey
     {
