@@ -29,12 +29,12 @@ class Transaction extends Data
     public function confirmed(): void
     {
         $this->status = StatusTransaction::CONFIRMED;
+        $this->addEvent(new ConfirmationEvent($this));
     }
 
     public function complete(): void
     {
         $this->status = StatusTransaction::COMPLETED;
-        $this->addEvent(new ConfirmationEvent($this));
     }
 
     public function error($description): void
