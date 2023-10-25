@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CodePix\System\Domain\Entities;
 
 use CodePix\System\Domain\Entities\Enum\Transaction\StatusTransaction;
+use CodePix\System\Domain\Events\Transaction\ConfirmationEvent;
 use CodePix\System\Domain\Events\Transaction\CreateEvent;
 use Costa\Entity\Data;
 use Costa\Entity\ValueObject\Uuid;
@@ -33,6 +34,7 @@ class Transaction extends Data
     public function complete(): void
     {
         $this->status = StatusTransaction::COMPLETED;
+        $this->addEvent(new ConfirmationEvent($this));
     }
 
     public function error($description): void
