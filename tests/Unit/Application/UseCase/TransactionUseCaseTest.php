@@ -70,7 +70,7 @@ describe("TransactionUseCase Unit Test", function () {
                     "findByDebit" => fn() => $this->transaction,
                     'save' => fn() => true,
                 ]),
-                eventManager: mockEventManager(0)
+                eventManager: mockEventManager()
             );
 
             $response = $useCase->confirm("4990146a-6d0e-11ee-b962-0242ac120002");
