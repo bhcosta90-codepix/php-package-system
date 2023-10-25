@@ -8,6 +8,7 @@ use BRCas\CA\Contracts\Event\EventManagerInterface;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Domain\Entities\Transaction;
+use CodePix\System\Domain\Events\Transaction\ErrorEvent;
 use CodePix\System\Domain\Repository\PixKeyRepositoryInterface;
 use CodePix\System\Domain\Repository\TransactionRepositoryInterface;
 use Costa\Entity\Exceptions\NotificationException;
@@ -36,9 +37,13 @@ class TransactionUseCase
         string $kind,
         string $key,
         string $description
-    ): Transaction {
+    ): ?Transaction {
         if (!$pix = $this->pixKeyRepository->findKeyByKind($kind, $key)) {
-            throw new NotFoundException('Pix not found');
+            $this->eventManager->dispatch([
+                new ErrorEvent((string)$debit, 'Pix not found'),
+            ]);
+
+            return null;
         }
 
         $transaction = new Transaction(
