@@ -8,12 +8,13 @@ use Costa\Entity\Contracts\EventInterface;
 
 class ErrorEvent implements EventInterface
 {
-    public function __construct(protected string $id, protected string $message){
+    public function __construct(protected string $bank, protected string $id, protected string $message){
 
     }
     public function payload(): array
     {
         return [
+            'bank' => $this->bank,
             'id' => $this->id,
             'message' => $this->message,
         ];
