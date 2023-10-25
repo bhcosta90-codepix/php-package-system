@@ -40,7 +40,7 @@ class TransactionUseCase
     ): ?Transaction {
         if (!$pix = $this->pixKeyRepository->findKeyByKind($kind, $key)) {
             $this->eventManager->dispatch([
-                new ErrorEvent((string)$debit, 'Pix not found'),
+                new ErrorEvent($bank, (string)$debit, 'Pix not found'),
             ]);
 
             return null;
