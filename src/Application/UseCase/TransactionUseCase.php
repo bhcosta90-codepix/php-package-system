@@ -102,7 +102,7 @@ class TransactionUseCase
      */
     public function complete(string $id): Transaction
     {
-        if (!$transaction = $this->transactionRepository->find($id)) {
+        if (!$transaction = $this->transactionRepository->findByDebit($id)) {
             throw new NotFoundException('Transaction not found');
         }
 
@@ -122,7 +122,7 @@ class TransactionUseCase
      */
     public function error(string $id, string $description): Transaction
     {
-        if (!$transaction = $this->transactionRepository->find($id)) {
+        if (!$transaction = $this->transactionRepository->findByDebit($id)) {
             throw new NotFoundException('Transaction not found');
         }
 
