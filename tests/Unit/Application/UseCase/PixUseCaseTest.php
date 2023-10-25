@@ -35,7 +35,8 @@ describe("PixUseCase Unit Test", function () {
                 ])
             );
 
-            expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), 'email', 'test@test.com'))->toThrow(UseCaseException::class);
+            expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), 'email', 'test@test.com')
+            )->toThrow(UseCaseException::class);
         });
 
         test("Exception - Not found account", function () {
