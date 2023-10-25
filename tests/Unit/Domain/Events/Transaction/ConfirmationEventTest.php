@@ -25,8 +25,8 @@ describe("ConfirmationEvent Unit Test", function () {
     test("payload", function () {
         $event = new ConfirmationEvent($this->transaction);
         assertEquals([
-            'bank' => (string) $this->bank,
-            'id' => (string) $this->debit,
+            'bank' => (string)$this->bank,
+            'id' => (string)$this->debit,
         ], $event->payload());
     });
 });

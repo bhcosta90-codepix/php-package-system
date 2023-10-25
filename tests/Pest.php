@@ -45,7 +45,8 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function mockEventManager($times = 1): EventManagerInterface|MockInterface{
+function mockEventManager($times = 1): EventManagerInterface|MockInterface
+{
     $response = Mockery::mock(EventManagerInterface::class);
     $response->shouldReceive('dispatch')->times($times);
     return $response;

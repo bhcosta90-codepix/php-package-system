@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use BRCas\CA\Contracts\Event\EventManagerInterface;
 use CodePix\System\Application\Exception\NotFoundException;
 use CodePix\System\Application\Exception\UseCaseException;
 use CodePix\System\Application\UseCase\TransactionUseCase;
@@ -44,7 +43,15 @@ describe("TransactionUseCase Unit Test", function () {
             eventManager: mockEventManager()
         );
 
-        $useCase->register((string)Uuid::make(), (string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing");
+        $useCase->register(
+            (string)Uuid::make(),
+            (string)Uuid::make(),
+            (string)Uuid::make(),
+            50,
+            "email",
+            "test@test.com",
+            "testing"
+        );
     });
 
     test("Exception -> Pix not found", function () {
@@ -102,7 +109,17 @@ describe("TransactionUseCase Unit Test", function () {
             eventManager: mockEventManager(0)
         );
 
-        expect(fn() => $useCase->register((string)Uuid::make(), (string)Uuid::make(), (string)Uuid::make(), 50, "email", "test@test.com", "testing"))->toThrow(
+        expect(
+            fn() => $useCase->register(
+                (string)Uuid::make(),
+                (string)Uuid::make(),
+                (string)Uuid::make(),
+                50,
+                "email",
+                "test@test.com",
+                "testing"
+            )
+        )->toThrow(
             UseCaseException::class
         );
     });
